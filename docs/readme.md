@@ -1,11 +1,10 @@
 # Data Engineering Project: Scalable and Cloud-Native Philippine Seismic Data Pipeline
 
 ## Brief Project Description/Objective
-This repository contains a fully automated data engineering pipeline that extracts, transforms, and loads (ETL) earthquake data from the PHIVOLCS Earthquake Information website into Google BigQuery. It is designed to collect and structure publicly available seismic data for analytics, monitoring, and visualization. An interactive Looker Studio dashboard is connected to the BigQuery dataset to present real-time insights on earthquake activity.
+This repository contains a fully automated data engineering pipeline that extracts, transforms, and loads (ETL) earthquake data from the PHIVOLCS Online Earthquake Bulletin. It is designed to collect and structure publicly available seismic data for analytics, monitoring, and visualization. An interactive Looker Studio dashboard is connected to the BigQuery dataset to present real-time insights on earthquake activity.
 
 The project aims to provide analysts with processed and structured data that enables the efficient development of reports and dashboards, supported by a scalable, reliable, cloud-native, and fully automated data pipeline. Additionally, it seeks to inform the public through an interactive dashboard that visualizes near real-time earthquake data collected from the PHIVOLCS Earthquake Bulletin, which compiles events detected by its national seismic monitoring network. The dashboard integrates geospatial mapping to highlight earthquake magnitude, depth, and regional impact.
 
-## Data Source
 
 ## Technologies and Tools (Infrastructures listed)
 
@@ -19,6 +18,13 @@ The project aims to provide analysts with processed and structured data that ena
  - Visualizations: [Google Looker Studio](https://lookerstudio.google.com/)
 
 ## Data Engineering/Data Pipeline
+
+![Data Pipeline Architecture](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/images/earthquake_data_pipeline.jpg)
+
+
+
+
+Seismic data is scraped from the official PHIVOLCS website using BeautifulSoup, which retrieves and parses the HTML content. The extracted data is then processed in Python, saved as CSV files, and loaded into a data lake (Google Cloud Storage) as part of the automated ETL workflow.
 
 ## Data Visualization
 
