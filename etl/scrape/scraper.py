@@ -26,8 +26,7 @@ def main():
     minute = f"{now.minute:02d}"
 
     # PHIVOLCS Earthquake URL
-    url = "https://earthquake.phivolcs.dost.gov.ph/" 
-    # f"https://earthquake.phivolcs.dost.gov.ph/EQLatest-Monthly/{year}/{year}_{month}.html"
+    url = "https://earthquake.phivolcs.dost.gov.ph/"
 
 
     upload_to_gcs(
