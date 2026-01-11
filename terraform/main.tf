@@ -83,8 +83,8 @@ resource "google_bigquery_table" "earthquake_table" {
       mode = "NULLABLE"
     },
     {
-      name = "location_point"
-      type = "GEOGRAPHY"
+      name = "province_id"
+      type = "INTEGER"
       mode = "NULLABLE"
     }
   ])
