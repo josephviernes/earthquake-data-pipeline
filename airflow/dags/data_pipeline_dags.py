@@ -7,7 +7,7 @@ from docker.types import Mount
 
 #set-up your google credentials
 creds_container_path = "/gsa/my_creds.json"
-creds_host_folder_path = "/home/jnv/Documents/project/earthquake-data-pipeline/keys"
+creds_host_folder_path = "/home/jnv/data-pipeline-vm/keys"
 
 #set-up your google storage bucket and if neeeded, the folder inside the bucket
 bucket = "earthquake-etl-bucket"
@@ -34,7 +34,7 @@ with DAG(
 
     t1 = DockerOperator(
         task_id="scraper",
-        image='asia-southeast1-docker.pkg.dev/earthquake-etl/etl-docker-repo/earthquake_data_web_scraper:v2.0',
+        image='asia-southeast1-docker.pkg.dev/earthquake-etl/etl-docker-repo/earthquake_data_web_scraper:v2.1',
         docker_url='unix://var/run/docker.sock',
         network_mode='bridge',
         mounts=[
