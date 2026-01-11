@@ -1,0 +1,84 @@
+id,region,province_cities
+1,Bangsamoro Autonomous Region In Muslim Mindanao (BARMM),Basilan
+2,Bangsamoro Autonomous Region In Muslim Mindanao (BARMM),Lanao del Sur
+3,Bangsamoro Autonomous Region In Muslim Mindanao (BARMM),Maguindanao del Norte
+4,Bangsamoro Autonomous Region In Muslim Mindanao (BARMM),Maguindanao del Sur
+5,Bangsamoro Autonomous Region In Muslim Mindanao (BARMM),Tawi-Tawi
+6,Cordillera Administrative Region (CAR),Abra
+7,Cordillera Administrative Region (CAR),Apayao
+8,Cordillera Administrative Region (CAR),Benguet
+9,Cordillera Administrative Region (CAR),Ifugao
+10,Cordillera Administrative Region (CAR),Kalinga
+11,Cordillera Administrative Region (CAR),Mountain Province
+12,MIMAROPA Region,Marinduque
+13,MIMAROPA Region,Occidental Mindoro
+14,MIMAROPA Region,Oriental Mindoro
+15,MIMAROPA Region,Palawan
+16,MIMAROPA Region,Romblon
+17,National Capital Region (NCR),Metro Manila
+18,Negros Island Region (NIR),Negros Occidental
+19,Negros Island Region (NIR),Negros Oriental
+20,Negros Island Region (NIR),Siquijor
+21,Region I (Ilocos Region),Ilocos Norte
+22,Region I (Ilocos Region),Ilocos Sur
+23,Region I (Ilocos Region),La Union
+24,Region I (Ilocos Region),Pangasinan
+25,Region II (Cagayan Valley),Batanes
+26,Region II (Cagayan Valley),Cagayan
+27,Region II (Cagayan Valley),Isabela
+28,Region II (Cagayan Valley),Nueva Vizcaya
+29,Region II (Cagayan Valley),Quirino
+30,Region III (Central Luzon),Aurora
+31,Region III (Central Luzon),Bataan
+32,Region III (Central Luzon),Bulacan
+33,Region III (Central Luzon),Nueva Ecija
+34,Region III (Central Luzon),Pampanga
+35,Region III (Central Luzon),Tarlac
+36,Region III (Central Luzon),Zambales
+37,Region IV-A (CALABARZON),Batangas
+38,Region IV-A (CALABARZON),Cavite
+39,Region IV-A (CALABARZON),Laguna
+40,Region IV-A (CALABARZON),Quezon
+41,Region IV-A (CALABARZON),Rizal
+42,Region IX (Zamboanga Peninsula),Sulu
+43,Region IX (Zamboanga Peninsula),Zamboanga Sibugay
+44,Region IX (Zamboanga Peninsula),Zamboanga del Norte
+45,Region IX (Zamboanga Peninsula),Zamboanga del Sur
+46,Region V (Bicol Region),Albay
+47,Region V (Bicol Region),Camarines Norte
+48,Region V (Bicol Region),Camarines Sur
+49,Region V (Bicol Region),Catanduanes
+50,Region V (Bicol Region),Masbate
+51,Region V (Bicol Region),Sorsogon
+52,Region VI (Western Visayas),Aklan
+53,Region VI (Western Visayas),Antique
+54,Region VI (Western Visayas),Capiz
+55,Region VI (Western Visayas),Guimaras
+56,Region VI (Western Visayas),Iloilo
+57,Region VII (Central Visayas),Bohol
+58,Region VII (Central Visayas),Cebu
+59,Region VIII (Eastern Visayas),Biliran
+60,Region VIII (Eastern Visayas),Eastern Samar
+61,Region VIII (Eastern Visayas),Leyte
+62,Region VIII (Eastern Visayas),Northern Samar
+63,Region VIII (Eastern Visayas),Samar
+64,Region VIII (Eastern Visayas),Southern Leyte
+65,Region X (Northern Mindanao),Bukidnon
+66,Region X (Northern Mindanao),Camiguin
+67,Region X (Northern Mindanao),Lanao del Norte
+68,Region X (Northern Mindanao),Misamis Occidental
+69,Region X (Northern Mindanao),Misamis Oriental
+70,Region XI (Davao Region),Davao Occidental
+71,Region XI (Davao Region),Davao Oriental
+72,Region XI (Davao Region),Davao de Oro
+73,Region XI (Davao Region),Davao del Norte
+74,Region XI (Davao Region),Davao del Sur
+75,Region XII (SOCCSKSARGEN),Cotabato
+76,Region XII (SOCCSKSARGEN),Sarangani
+77,Region XII (SOCCSKSARGEN),South Cotabato
+78,Region XII (SOCCSKSARGEN),Sultan Kudarat
+79,Region XIII (Caraga),Agusan del Norte
+80,Region XIII (Caraga),Agusan del Sur
+81,Region XIII (Caraga),Dinagat Islands
+82,Region XIII (Caraga),Surigao del Norte
+83,Region XIII (Caraga),Surigao del Sur
