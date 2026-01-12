@@ -31,6 +31,9 @@ Terraform provisions Google Cloud resources and defines the fact table schema, w
 
 Seismic data is scraped from the official PHIVOLCS website and processed using Beautiful Soup, which structures and parses the raw HTML content. The extracted earthquake records are then cleaned and organized into CSV files, which are subsequently uploaded to a Google Cloud Storage (GCS) bucket. This step serves as the staging layer in the automated ETL workflow, enabling reliable downstream data transformations and analysis.
 
+-- initial archived earthquake data from January 2020 to last month
+-- daily updating of data
+
 ### Transformation
 
 The main transformation process begins with Python automatically identifying the most recent earthquake data file stored in the Google Cloud Storage (GCS) bucket using the Google Cloud client library. Once the latest file is detected, a PySpark session is established to read the data directly from GCS and perform data transformations such as cleaning text fields, converting data types, standardizing date formats, and extracting province information.
