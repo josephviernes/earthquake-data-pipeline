@@ -23,9 +23,38 @@ The project aims to provide analysts with processed and structured data that ena
 
 ### Data Modelling
 
-This data pipeline uses a lightweight dimensional model in BigQuery, with a main fact table for earthquake events (100,000+ rows and counting) and a small province dimension table (83 provinces, 17 regions). The fact table records key attributes such as datetime, location, depth, magnitude, latitude, longitude, and other event-specific fields, along with a deterministic unique ID generated with FARM_FINGERPRINT. The province dimension table standardizes province names and provides province_id references for referential integrity. The pipeline enforces this model on staged new entries by standardizing province values, populating province_id, generating unique IDs, and merging only new or unmatched events into the fact table, producing a maintainable, analytics-ready schema that balances correctness and simplicity. 
+This project implements a lightweight dimensional data model in BigQuery with:
+- A primary fact table for earthquake events (100,000+ rows and growing)
+- A small province dimension table (83 provinces and 17 regions)
+- Database and table schemas defined declaratively using Terraform to ensure
+  consistency, reproducibility, and version control
 
-Terraform provisions Google Cloud resources and defines the fact table schema, while the simpler province dimension is added manually.
+#### Fact Table: phivolcs_earthquake
+- Grain: one row per earthquake event
+- Stores event attributes: datetime, depth, magnitude, latitude, longitude, relative location
+- Includes a foreign key reference to province data
+- Uses a deterministic unique identifier generated with BigQuery’s `FARM_FINGERPRINT`
+  to recognize existing events and prevent duplicates
+
+#### Dimension Table: dim_provinces
+- Standardizes geographic attributes and avoids duplication
+- Sourced from an official Philippine government open data dataset
+- Processed and curated for consistency
+
+#### Relationships
+- `phivolcs_earthquake.province_id` → `dim_provinces.province_id`
+
+#### Model Enforcement and Data Integrity
+During ingestion in BigQuery, the pipeline enforces the data model by:
+- Standardizing province values in the provinces dimension table from raw location csv file
+- Standardizing and correcting province/location values of staged seismic events with the dimension table as reference
+- Populating `province_id` column of the staged data with values from dimension table, preparing the data for merging
+- Generating deterministic unique event identifiers
+- Merging only new or previously unmatched earthquake events into the fact table
+
+This approach produces a maintainable, analytics-ready schema optimized for
+time-series and geographic analysis.
+
 
 ### Extraction and Staging
 
