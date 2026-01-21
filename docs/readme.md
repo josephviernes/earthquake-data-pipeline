@@ -23,6 +23,8 @@ The project aims to provide analysts with processed and structured data that ena
 
 ### Data Modelling
 
+![Data Pipeline Architecture](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/images/data_modelling.jpg)
+
 This project implements a lightweight dimensional data model in BigQuery with:
 - A primary fact table for earthquake events (100,000+ rows and growing)
 - A small province dimension table (83 provinces and 17 regions)
