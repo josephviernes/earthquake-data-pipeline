@@ -20,6 +20,8 @@ The project aims to provide analysts with processed and structured data that ena
 
 ## Data Engineering/Data Pipeline
 
+The data pipeline is deployed on Google Compute Engine and orchestrated using containerized Apache Airflow. Airflow coordinates three Docker-based stages—extraction, transformation, and loading with post-load transformations—while pulling the latest container images from Artifact Registry. This design enables independent updates to each pipeline stage and supports seamless development-to-production transitions without requiring DAG changes or manual updates on the Compute Engine instance.
+
 ![Data Pipeline Architecture](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/images/earthquake_data_pipeline.jpg)
 
 ### Extraction and Staging
@@ -63,7 +65,9 @@ before downstream modeling and ingestion into the fact table.
 
 ### Post-load Transformation & Warehousing
 
-In the final stage of the Airflow orchestration, Airflow executes a Docker container that runs a Python script. The Python script connects to BigQuery and triggers a stored procedure. The stored procedure performs the following steps: (1) simplifies and standardizes province values, (2) populates the province_id column by referencing the province dimension table, (3) generates a unique identifier for each entry using BigQuery-native hashing (FARM_FINGERPRINT) and (4) merges unmatched entries into the main table, thereby completing the ingestion and transformation of earthquake data in BigQuery.
+In the final stage of the Airflow orchestration, the last Docker container runs a Python script that connects to BigQuery and triggers a stored procedure for post-load transformations.
+
+The procedure standardizes province values, assigns province_id values using the province dimension table, generates a unique identifier with FARM_FINGERPRINT, and merges new or unmatched records into the main table—completing the ingestion and transformation process in BigQuery.
 
 ### Data Modelling
 
