@@ -31,11 +31,35 @@ The data pipeline operates in two modalities:
 - A recurring extraction that runs on a daily or hourly schedule (configurable within the DAG) to ingest newly published earthquake events
 
 
-### Transformation
+### Data Transformation (PySpark)
 
-The main transformation process begins with Python automatically identifying the most recent earthquake data file stored in the Google Cloud Storage (GCS) bucket using the Google Cloud client library. Once the latest file is detected, a PySpark session is established to read the data directly from GCS and perform data transformations such as cleaning text fields, converting data types, standardizing date formats, and extracting province information.
+This stage performs schema normalization and data quality enforcement prior to loading
+data into the analytical warehouse.
 
-Specifically, month abbreviations in the datetime column are expanded to full names and converted into proper timestamp formats; latitude, longitude, depth, and magnitude values are cast into precise numeric types; extraneous whitespace and special characters are removed from text fields; and the province field is derived from the relative location column using regular expressions. These transformations collectively ensure that the data is clean, consistent, and analysis-ready before being written to BigQuery as a temporary table.
+The transformation stage is implemented in Python using PySpark and operates on the
+most recent earthquake data file stored in Google Cloud Storage (GCS).
+
+#### Process Overview
+- Automatically detects the latest earthquake CSV file in the GCS bucket using the
+  Google Cloud client library
+- Initializes a PySpark session to read the data directly from GCS
+- Applies a series of transformations to clean, standardize, and enrich the dataset
+- Writes the transformed data to BigQuery as a temporary staging table
+
+#### Transformation Steps
+- **Datetime normalization**
+  - Expands month abbreviations to full names
+  - Converts values into proper `TIMESTAMP` formats
+- **Type casting**
+  - Casts latitude, longitude, depth, and magnitude to precise numeric types
+- **Text cleaning**
+  - Removes extraneous whitespace and special characters from text fields
+- **Feature extraction**
+  - Derives the `province` field from the `relative_location` column using regular expressions
+
+These transformations ensure the data is clean, consistent, and analytics-ready
+before downstream modeling and ingestion into the fact table.
+
 
 ### Post-load Transformation & Warehousing
 
