@@ -26,8 +26,10 @@ The project aims to provide analysts with processed and structured data that ena
 
 Seismic data is scraped from the official PHIVOLCS website and processed using Beautiful Soup, which structures and parses the raw HTML content. The extracted earthquake records are then cleaned and organized into CSV files, which are subsequently uploaded to a Google Cloud Storage (GCS) bucket. This step serves as the staging layer in the automated ETL workflow, enabling reliable downstream data transformations and analysis.
 
--- initial archived earthquake data from January 2020 to last month
--- daily updating of data
+The data pipeline operates in two modalities:
+- A one-time historical extraction that retrieves archived earthquake data from the PHIVOLCS website, covering records from January 2020 up to the month preceding the DAG’s initial execution
+- A recurring extraction that runs on a daily or hourly schedule (configurable within the DAG) to ingest newly published earthquake events
+
 
 ### Transformation
 
