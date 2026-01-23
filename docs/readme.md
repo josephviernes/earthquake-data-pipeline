@@ -33,13 +33,11 @@ Airflow orchestrates the pipeline in **two execution modes**:
 
 ![Data Pipeline Architecture](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/images/earthquake_data_pipeline.jpg)
 
-<br><br>
 
 ### Extraction and Staging
 
 Seismic data is scraped from the official PHIVOLCS website and processed using Beautiful Soup, which structures and parses the raw HTML content. The extracted earthquake records are then cleaned and organized into CSV files, which are subsequently uploaded to a Google Cloud Storage (GCS) bucket. This step serves as the staging layer in the automated ETL workflow, enabling reliable downstream data transformations and analysis.
 
-<br><br>
 
 ### Data Transformation (PySpark)
 
@@ -70,7 +68,6 @@ most recent earthquake data file stored in Google Cloud Storage (GCS).
 These transformations ensure the data is clean, consistent, and analytics-ready
 before downstream modeling and ingestion into the fact table.
 
-<br><br>
 
 ### Post-load Transformation & Warehousing
 
@@ -78,7 +75,6 @@ In the final stage of the Airflow orchestration, the last Docker container runs 
 
 The procedure standardizes province values, assigns province_id values using the province dimension table, generates a unique identifier with FARM_FINGERPRINT, and merges new or unmatched records into the main table—completing the ingestion and transformation process in BigQuery.
 
-<br><br>
 
 ### Data Modelling
 
