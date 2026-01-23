@@ -11,7 +11,7 @@ The project aims to provide analysts with processed and structured data that ena
  - Infrastructure as a Service (IaaS): [Google Compute Engine](https://cloud.google.com/products/compute)
  - Infrastructure as Code (IaC): [Terraform](https://github.com/hashicorp/terraform)
  - Containerization: [Docker](https://www.docker.com/), [Docker Compose](https://docs.docker.com/compose/), [Google Artifact Registry](https://cloud.google.com/artifact-registry/docs)
- - Workflow Orchestration: [Airflow](https://airflow.apache.org/)
+ - Workflow Orchestration: [Apache Airflow](https://airflow.apache.org/)
  - Data Lake: [Google Cloud Storage](https://cloud.google.com/storage)
  - Data Warehouse: [BigQuery](https://cloud.google.com/bigquery)
  - Transformations: [Apache Spark](https://spark.apache.org/), [BigQuery](https://cloud.google.com/bigquery)
@@ -22,15 +22,20 @@ The project aims to provide analysts with processed and structured data that ena
 
 The data pipeline is deployed on Google Compute Engine and orchestrated using containerized Apache Airflow. Airflow coordinates three Docker-based stages—extraction, transformation, and loading with post-load transformations—while pulling the latest container images from Artifact Registry. This design enables independent updates to each pipeline stage and supports seamless development-to-production transitions without requiring DAG changes or manual updates on the Compute Engine instance.
 
+Airflow orchestrates the pipeline in **two execution modes**:
+
+- **One-time historical backfill**  
+  Retrieves archived earthquake data from the PHIVOLCS website, covering records from January 2020 up to the month preceding the DAG’s initial execution.
+
+- **Recurring incremental ingestion**  
+  Runs on a daily or hourly schedule (configurable within the DAG) to ingest newly published earthquake events.
+
+
 ![Data Pipeline Architecture](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/images/earthquake_data_pipeline.jpg)
 
 ### Extraction and Staging
 
 Seismic data is scraped from the official PHIVOLCS website and processed using Beautiful Soup, which structures and parses the raw HTML content. The extracted earthquake records are then cleaned and organized into CSV files, which are subsequently uploaded to a Google Cloud Storage (GCS) bucket. This step serves as the staging layer in the automated ETL workflow, enabling reliable downstream data transformations and analysis.
-
-The data pipeline operates in two modalities:
-- A one-time historical extraction that retrieves archived earthquake data from the PHIVOLCS website, covering records from January 2020 up to the month preceding the DAG’s initial execution
-- A recurring extraction that runs on a daily or hourly schedule (configurable within the DAG) to ingest newly published earthquake events
 
 
 ### Data Transformation (PySpark)
@@ -106,10 +111,10 @@ This approach produces a maintainable, analytics-ready schema optimized for
 time-series and geographic analysis.
 
 
-### Orchestration
+## Data Visualization (Looker Studio)
 
-
-## Data Visualization
+[Link to Dashboard](https://lookerstudio.google.com/reporting/63994a9d-4b80-4465-9f27-82b6a52b6d26/page/611ZF)
+![dashboard](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/images/looker.png)
 
 ## Reproductivity (link)
 
