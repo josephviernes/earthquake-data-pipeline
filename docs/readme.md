@@ -77,7 +77,9 @@ In the final stage of the Airflow orchestration, the last Docker container runs 
 
 The procedure standardizes province values, assigns province_id values using the province dimension table, generates a unique identifier with FARM_FINGERPRINT, and merges new or unmatched records into the main table—completing the ingestion and transformation process in BigQuery.
 
-
+<br><br>
+<br><br>
+<br><br>
 
 ### Data Modelling
 
