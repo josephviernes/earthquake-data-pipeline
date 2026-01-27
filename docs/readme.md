@@ -1,7 +1,7 @@
 # Data Engineering Project: Scalable and Cloud-Native Philippine Seismic Data Pipeline
 
 ## Brief Project Description/Problem Statement
-This repository contains a fully automated data engineering pipeline that extracts, transforms, and loads (ETL) earthquake data from the PHIVOLCS Online Earthquake Bulletin. It is designed to collect and structure publicly available seismic data for analytics, monitoring, and visualization. An interactive Looker Studio dashboard is connected to the BigQuery dataset to present real-time insights on earthquake activity.
+This repository contains a fully automated data engineering pipeline that extracts, transforms, and loads (ETL) earthquake data from the [PHIVOLCS Online Earthquake Bulletin](https://www.phivolcs.dost.gov.ph/earthquake-information/). It is designed to collect and structure publicly available seismic data for analytics, monitoring, and visualization. An interactive Looker Studio dashboard is connected to the BigQuery dataset to present real-time insights on earthquake activity.
 
 The project aims to provide analysts with processed and structured data that enables the efficient development of reports and dashboards, supported by a scalable, reliable, cloud-native, and fully automated data pipeline. Additionally, it seeks to inform the public through an interactive dashboard that visualizes near real-time earthquake data collected from the PHIVOLCS Earthquake Bulletin, which compiles events detected by its national seismic monitoring network. The dashboard integrates geospatial mapping to highlight earthquake magnitude, depth, and regional impact.
 
