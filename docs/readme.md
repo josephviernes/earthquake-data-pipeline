@@ -118,6 +118,6 @@ time-series and geographic analysis.
 [Link to Dashboard](https://lookerstudio.google.com/reporting/63994a9d-4b80-4465-9f27-82b6a52b6d26/page/611ZF)
 ![dashboard](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/images/looker.png)
 
-## ![Running The Project](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/setup.md)
+## [Running The Project](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/setup.md)
 
 ## Credits/Special Mention
