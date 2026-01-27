@@ -24,10 +24,10 @@ The data pipeline is deployed on Google Compute Engine and orchestrated using co
 
 Airflow orchestrates the pipeline in **two execution modes**:
 
-- **One-time historical backfill**  
+- [**One-time historical backfill**](airflow/dags/initial_dags.py)  
   Retrieves archived earthquake data from the PHIVOLCS website, covering records from January 2020 up to the month preceding the DAG’s initial execution.
 
-- **Recurring incremental ingestion**  
+- [**Recurring incremental ingestion**](airflow/dags/data_pipeline_dags.py)
   Runs on a daily or hourly schedule (configurable within the DAG) to ingest newly published earthquake events.
 
 
