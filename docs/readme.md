@@ -93,7 +93,7 @@ This project implements a lightweight dimensional data model in BigQuery with:
 - Uses a deterministic unique identifier generated with BigQuery’s `FARM_FINGERPRINT`
   to recognize existing events and prevent duplicates
 
-#### Dimension Table: dim_provinces
+#### Dimension Table: provinces
 - Standardizes geographic attributes and avoids duplication
 - Sourced from an official Philippine government open data dataset
 - Processed and curated for consistency
