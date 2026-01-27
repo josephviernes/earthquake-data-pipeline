@@ -3,7 +3,7 @@
 ## Brief Project Description/Problem Statement
 This repository contains a fully automated, cloud-native ETL pipeline that extracts, transforms, and loads earthquake data from the [PHIVOLCS Online Earthquake Bulletin](https://www.phivolcs.dost.gov.ph/earthquake-information/) for analytics and visualization. An interactive Looker Studio dashboard is connected to the BigQuery dataset to present real-time insights on earthquake activity.
 
-The pipeline structures near real-time seismic data to support dashboards, monitoring, and exploratory analysis, with an interactive Looker Studio dashboard that integrates geospatial mapping to highlight earthquake magnitude, depth, and regional impact.
+The pipeline structures near real-time seismic data to support dashboards, monitoring, and exploratory analysis, with geospatial mapping highlighting earthquake magnitude, depth, and regional impact.
 
 
 ## Technologies and Tools
@@ -133,6 +133,6 @@ time-series and geographic analysis.
 
 Thanks to the instructors and contributors at [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main)
 
-### Linkedin
+### LinkedIn
 
- - [My Linkedin](https://www.linkedin.com/in/joseph-viernes-4332a41a1/)
+ - [My LinkedIn](https://www.linkedin.com/in/joseph-viernes-4332a41a1/)
