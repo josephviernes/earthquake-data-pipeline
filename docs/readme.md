@@ -1,12 +1,14 @@
 # Data Engineering Project: Scalable and Cloud-Native Philippine Seismic Data Pipeline
 
 ## Brief Project Description/Problem Statement
-This repository contains a fully automated data engineering pipeline that extracts, transforms, and loads (ETL) earthquake data from the [PHIVOLCS Online Earthquake Bulletin](https://www.phivolcs.dost.gov.ph/earthquake-information/). It is designed to collect and structure publicly available seismic data for analytics, monitoring, and visualization. An interactive Looker Studio dashboard is connected to the BigQuery dataset to present real-time insights on earthquake activity.
+This repository contains a fully automated, cloud-native ETL pipeline that extracts, transforms, and loads earthquake data from the [PHIVOLCS Online Earthquake Bulletin](https://www.phivolcs.dost.gov.ph/earthquake-information/) for analytics and visualization. An interactive Looker Studio dashboard is connected to the BigQuery dataset to present real-time insights on earthquake activity.
 
-The project aims to provide analysts with processed and structured data that enables the efficient development of reports and dashboards, supported by a scalable, reliable, cloud-native, and fully automated data pipeline. Additionally, it seeks to inform the public through an interactive dashboard that visualizes near real-time earthquake data collected from the PHIVOLCS Earthquake Bulletin, which compiles events detected by its national seismic monitoring network. The dashboard integrates geospatial mapping to highlight earthquake magnitude, depth, and regional impact.
+The pipeline structures near real-time seismic data to support dashboards, monitoring, and exploratory analysis, with an interactive Looker Studio dashboard that integrates geospatial mapping to highlight earthquake magnitude, depth, and regional impact.
 
 
 ## Technologies and Tools
+
+The pipeline is built using a modern cloud-native data stack, with each component selected to support scalability, automation, and streamlined updates:
 
  - Infrastructure as a Service (IaaS): [Google Compute Engine](https://cloud.google.com/products/compute)
  - Infrastructure as Code (IaC): [Terraform](https://github.com/hashicorp/terraform)
@@ -17,10 +19,15 @@ The project aims to provide analysts with processed and structured data that ena
  - Transformations: [Apache Spark](https://spark.apache.org/), [BigQuery](https://cloud.google.com/bigquery)
  - Visualizations: [Google Looker Studio](https://lookerstudio.google.com/)
 
+## Project Scope Disclaimer
+
+This project intentionally utilizes a broad set of data engineering tools and technologies. The primary goal is to gain hands-on experience across the modern data engineering stack—including orchestration, containerization, infrastructure as code, distributed processing, and cloud-native warehousing—rather than to optimize for minimal tooling.
 
 ## Data Engineering/Data Pipeline
 
-The data pipeline is deployed on Google Compute Engine and orchestrated using containerized Apache Airflow. Airflow coordinates three Docker-based stages—extraction, transformation, and loading with post-load transformations—while pulling the latest container images from Artifact Registry. This design enables independent updates to each pipeline stage and supports seamless development-to-production transitions without requiring DAG changes or manual updates on the Compute Engine instance.
+The data pipeline runs on Google Compute Engine and is orchestrated using containerized Apache Airflow. Each pipeline stage—extraction, transformation, and post-load processing—executes in its own Docker container, with images pulled from Google Artifact Registry.
+
+This design allows individual pipeline components to be updated independently without modifying Airflow DAGs or redeploying the Compute Engine instance.
 
 Airflow orchestrates the pipeline in **two execution modes**:
 
@@ -38,11 +45,12 @@ Airflow orchestrates the pipeline in **two execution modes**:
 
 Seismic data is scraped from the official PHIVOLCS website and processed using Beautiful Soup, which structures and parses the raw HTML content. The extracted earthquake records are then cleaned and organized into CSV files, which are subsequently uploaded to a Google Cloud Storage (GCS) bucket. This step serves as the staging layer in the automated ETL workflow, enabling reliable downstream data transformations and analysis.
 
+Scraping is used due to the absence of a publicly available API for historical PHIVOLCS earthquake data.
+
 
 ### Data Transformation (PySpark)
 
-This stage performs schema normalization and data quality enforcement prior to loading
-data into the analytical warehouse.
+This stage performs schema normalization and data quality enforcement prior to loading data into the analytical warehouse. PySpark is used to support scalable processing and future data volume growth beyond single-machine limitations.
 
 The transformation stage is implemented in Python using PySpark and operates on the
 most recent earthquake data file stored in Google Cloud Storage (GCS).
@@ -75,6 +83,8 @@ In the final stage of the Airflow orchestration, the last Docker container runs 
 
 The procedure standardizes province values, assigns province_id values using the province dimension table, generates a unique identifier with FARM_FINGERPRINT, and merges new or unmatched records into the main table—completing the ingestion and transformation process in BigQuery.
 
+Post-load transformations are implemented as a BigQuery stored procedure to centralize data standardization logic within the warehouse, ensure consistent data modeling despite upstream changes, and support rapid deployment of fixes and iterative adjustments.
+
 
 ### Data Modelling
 
@@ -103,7 +113,6 @@ This project implements a lightweight dimensional data model in BigQuery with:
 
 #### Model Enforcement and Data Integrity
 During ingestion in BigQuery, the pipeline enforces the data model by:
-- Standardizing province values in the provinces dimension table from raw location csv file
 - Standardizing and correcting province/location values of staged seismic events with the dimension table as reference
 - Populating `province_id` column of the staged data with values from dimension table, preparing the data for merging
 - Generating deterministic unique event identifiers
@@ -120,4 +129,10 @@ time-series and geographic analysis.
 
 ## [Running The Project](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/setup.md)
 
-## Credits/Special Mention
+## Acknowledgements
+
+Thanks to the instructors and contributors at [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main)
+
+### Linkedin
+
+ - [My Linkedin](https://www.linkedin.com/in/joseph-viernes-4332a41a1/)
