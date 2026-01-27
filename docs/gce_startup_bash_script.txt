@@ -1,0 +1,42 @@
+#!/bin/bash
+
+echo " Initiating Startup Bash Script"
+
+# Redirect all output (stdout and stderr) to a log file for debugging
+exec > /var/log/startup-script.log 2>&1
+
+# Define project directory
+PROJECT_DIR="/home/jnv/data-pipeline-vm/airflow"
+
+# Enable docker at boot
+sudo systemctl enable docker
+
+# Wait until Docker is ready
+until sudo docker info >/dev/null 2>&1; do
+  echo "Waiting for Docker..."
+  sleep 10
+done
+
+# Navigate to the project directory
+cd "$PROJECT_DIR" || { echo "Failed to cd into $PROJECT_DIR"; exit 1; }
+
+# Start docker compose project
+sudo docker compose up -d
+
+echo "Docker Compose started. Waiting for Airflow services..."
+
+# Wait until the Airflow CLI is available
+until sudo docker compose exec airflow-cli airflow info >/dev/null 2>&1; do
+  echo "Waiting for Airflow CLI..."
+  sleep 10
+done
+
+echo "Airflow is ready. Unpausing and triggering DAG..."
+
+# Unpause DAG
+sudo docker exec airflow-airflow-cli-1 airflow dags unpause earthquake_data_pipeline
+
+# Trigger DAG
+sudo docker exec airflow-airflow-cli-1 airflow dags trigger earthquake_data_pipeline
+
+echo "Startup Script Complete"
