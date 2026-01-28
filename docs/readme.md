@@ -43,7 +43,7 @@ Airflow orchestrates the pipeline in **two execution modes**:
 
 ### Extraction and Staging
 
-[Link to folder of Docker build](https://github.com/josephviernes/earthquake-data-pipeline/tree/main/etl/extract)
+[Link to Docker image build directory](https://github.com/josephviernes/earthquake-data-pipeline/tree/main/etl/extract)
 
 Seismic data is scraped from the official PHIVOLCS website and processed using Beautiful Soup, which structures and parses the raw HTML content. The extracted earthquake records are then cleaned and organized into CSV files, which are subsequently uploaded to a Google Cloud Storage (GCS) bucket. This step serves as the staging layer in the automated ETL workflow, enabling reliable downstream data transformations and analysis.
 
@@ -52,7 +52,7 @@ Scraping is used due to the absence of a publicly available API for historical P
 
 ### Data Transformation (PySpark)
 
-[Link to folder of Docker build](https://github.com/josephviernes/earthquake-data-pipeline/tree/main/etl/transform)
+[Link to Docker image build directory](https://github.com/josephviernes/earthquake-data-pipeline/tree/main/etl/transform)
 
 This stage performs schema normalization and data quality enforcement prior to loading data into the analytical warehouse. PySpark is used to support scalable processing and future data volume growth beyond single-machine limitations.
 
@@ -139,6 +139,15 @@ The core ETL stages (extraction, transformation, and loading) are packaged as Do
 
 [Setup Instructions](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/setup.md)
 
+## Future Work & Improvements
+
+- Expand reporting and add weekly earthquake summaries sent via Slack or email.
+
+- Integrate Philippine population data to estimate potential human impact of seismic events.
+
+- Add more testing, including basic data quality checks and schema validation.
+
+- Expose the cleaned earthquake data through a simple API, since no official PHIVOLCS seismic API is currently available.
 
 ## Acknowledgements
 
