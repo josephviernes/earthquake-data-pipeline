@@ -43,12 +43,16 @@ Airflow orchestrates the pipeline in **two execution modes**:
 
 ### Extraction and Staging
 
+[Link to folder of Docker build](https://github.com/josephviernes/earthquake-data-pipeline/tree/main/etl/extract)
+
 Seismic data is scraped from the official PHIVOLCS website and processed using Beautiful Soup, which structures and parses the raw HTML content. The extracted earthquake records are then cleaned and organized into CSV files, which are subsequently uploaded to a Google Cloud Storage (GCS) bucket. This step serves as the staging layer in the automated ETL workflow, enabling reliable downstream data transformations and analysis.
 
 Scraping is used due to the absence of a publicly available API for historical PHIVOLCS earthquake data.
 
 
 ### Data Transformation (PySpark)
+
+[Link to folder of Docker build](https://github.com/josephviernes/earthquake-data-pipeline/tree/main/etl/transform)
 
 This stage performs schema normalization and data quality enforcement prior to loading data into the analytical warehouse. PySpark is used to support scalable processing and future data volume growth beyond single-machine limitations.
 
@@ -127,7 +131,14 @@ time-series and geographic analysis.
 [Link to Dashboard](https://lookerstudio.google.com/reporting/63994a9d-4b80-4465-9f27-82b6a52b6d26/page/611ZF)
 ![dashboard](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/images/looker.png)
 
-## [Running The Project (Reproducibility)](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/setup.md)
+## Running The Project (Reproducibility)
+
+The project is designed to be fully reproducible using infrastructure-as-code and containerized services. All cloud resources (GCS buckets, BigQuery datasets, and tables) are provisioned via Terraform, while Airflow and pipeline components are deployed using Docker and Docker Compose.
+
+The core ETL stages (extraction, transformation, and loading) are packaged as Docker images and published to a public Google Artifact Registry repository, allowing Airflow to pull prebuilt images at runtime without local builds. Environment-specific configuration, such as credentials and project IDs, is externalized through environment variables to support safe, repeatable, and portable deployments.
+
+[Setup Instructions](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/setup.md)
+
 
 ## Acknowledgements
 
