@@ -153,10 +153,8 @@ The core ETL stages (extraction, transformation, and loading) are packaged as Do
 
 Thanks to the instructors and contributors of [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main), which helped shape the ideas and tooling used in this project.
 
-### LinkedIn
+### Connect With Me
 
  - [My LinkedIn](https://www.linkedin.com/in/joseph-viernes-4332a41a1/)
 
- ### Email
-
- - josephnviernes@gmail.com
+ - Email: josephnviernes@gmail.com
