@@ -156,3 +156,7 @@ Thanks to the instructors and contributors of [Data Engineering Zoomcamp](https:
 ### LinkedIn
 
  - [My LinkedIn](https://www.linkedin.com/in/joseph-viernes-4332a41a1/)
+
+ ### Email
+
+ - josephnviernes@gmail.com
