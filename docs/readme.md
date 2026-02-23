@@ -1,10 +1,11 @@
 # Data Engineering Project: Scalable and Cloud-Native Philippine Seismic Data Pipeline
 
 ## Brief Project Description/Problem Statement
-This repository contains a fully automated, cloud-native ETL pipeline that extracts, transforms, and loads earthquake data from the [PHIVOLCS Online Earthquake Bulletin](https://www.phivolcs.dost.gov.ph/earthquake-information/) for analytics and visualization. An interactive Looker Studio dashboard is connected to the BigQuery dataset to present real-time insights on earthquake activity.
+The Philippines is one of the most disaster-prone countries in the world, with frequent seismic activity that can significantly impact communities and infrastructure. While PHIVOLCS provides publicly accessible earthquake bulletins, the data is not structured in a warehouse-ready format and does not support automated, near real-time analytics.
 
-The pipeline structures near real-time seismic data to support dashboards, monitoring, and exploratory analysis, with geospatial mapping highlighting earthquake magnitude, depth, and regional impact.
+To address this gap, this repository contains a fully automated, cloud-native ETL pipeline that extracts, transforms, and loads earthquake data from the [PHIVOLCS Online Earthquake Bulletin](https://www.phivolcs.dost.gov.ph/earthquake-information/) for analytics and visualization. The pipeline structures near real-time seismic data to support dashboards, monitoring, and exploratory analysis, with geospatial mapping highlighting earthquake magnitude, depth, and regional impact.
 
+An interactive Looker Studio dashboard is connected to the BigQuery dataset to present continuously updated insights on earthquake activity.
 
 ## Technologies and Tools
 
@@ -35,7 +36,9 @@ Airflow orchestrates the pipeline in **two execution modes**:
   Retrieves archived earthquake data from the PHIVOLCS website, covering records from January 2020 up to the month preceding the DAG’s initial execution.
 
 - [**Recurring incremental ingestion**](airflow/dags/data_pipeline_dags.py)
-  Runs on a daily or hourly schedule (configurable within the DAG) to ingest newly published earthquake events.
+The DAG supports configurable daily or hourly execution to ingest newly published earthquake events.
+
+While Airflow can manage scheduling internally, I opted to control execution at the infrastructure level to optimize cloud costs. The GCE VM is managed through Google Cloud instance scheduling to limit compute uptime. When the VM boots, a startup script triggers the Airflow DAG to execute the pipeline. Once all tasks complete, the VM shuts itself down automatically, ensuring compute resources are active only during processing windows.
 
 
 ![Data Pipeline Architecture](https://github.com/josephviernes/earthquake-data-pipeline/blob/main/docs/images/earthquake_data_pipeline.jpg)
@@ -155,6 +158,6 @@ Thanks to the instructors and contributors of [Data Engineering Zoomcamp](https:
 
 ### Connect With Me
 
- - [My LinkedIn](https://www.linkedin.com/in/joseph-viernes-4332a41a1/)
+ - [My LinkedIn](linkedin.com/in/joseph-viernes)
 
  - Email: josephnviernes@gmail.com
