@@ -26,7 +26,7 @@ This project intentionally utilizes a broad set of data engineering tools and te
 
 ## Data Engineering/Data Pipeline
 
-The data pipeline runs on Google Compute Engine and is orchestrated using containerized Apache Airflow. Each pipeline stage—extraction, transformation, and post-load processing—executes in its own Docker container, with images pulled from Google Artifact Registry.
+The data pipeline runs on a Google Compute Engine (GCE) virtual machine (VM) and is orchestrated using containerized Apache Airflow. Each pipeline stage—extraction, transformation, and post-load processing—executes in its own Docker container, with images pulled from Google Artifact Registry.
 
 This design allows individual pipeline components to be updated independently without modifying Airflow DAGs or redeploying the Compute Engine instance.
 
