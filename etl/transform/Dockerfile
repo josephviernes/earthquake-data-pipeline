@@ -27,8 +27,5 @@ ENV PYSPARK_DRIVER_PYTHON=python3
 # Copy the rest of the application code to the container
 COPY . .
 
-# Expose port 5000 to the host machine
-EXPOSE 5000
-
 # Define the command to run the app
 CMD ["python3", "processor.py"]
