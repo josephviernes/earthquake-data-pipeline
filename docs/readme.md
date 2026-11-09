@@ -57,10 +57,9 @@ Scraping is used due to the absence of a publicly available API for historical P
 
 [Link to Docker image build directory](https://github.com/josephviernes/earthquake-data-pipeline/tree/main/etl/transform)
 
-This stage performs schema normalization and data quality enforcement prior to loading data into the analytical warehouse. PySpark is used to support scalable processing and future data volume growth beyond single-machine limitations.
+This stage performs data quality enforcement prior to loading data into the analytical warehouse. PySpark is used to support scalable processing and future data volume growth beyond single-machine limitations.
 
-The transformation stage is implemented in Python using PySpark and operates on the
-most recent earthquake data file stored in Google Cloud Storage (GCS).
+The transformation stage is implemented in Python using PySpark and operates on the most recent earthquake data file stored in Google Cloud Storage (GCS).
 
 #### Process Overview
 - Automatically detects the latest earthquake CSV file in the GCS bucket using the
