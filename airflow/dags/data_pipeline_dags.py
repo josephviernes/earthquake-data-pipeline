@@ -5,10 +5,6 @@ from datetime import datetime, timedelta
 from docker.types import Mount
 
 
-#set-up your google credentials
-creds_container_path = "/gsa/my_creds.json"
-creds_host_folder_path = "/home/jnv/data-pipeline-vm/keys"
-
 #set-up your google storage bucket and if neeeded, the folder inside the bucket
 bucket = "earthquake-etl-bucket"
 folder = "dailies"
@@ -25,7 +21,7 @@ default_args = {
 
 with DAG(
     default_args=default_args,
-    dag_id="earthquake_data_pipeline",
+    dag_id="earthquake_data_pipeline_v2",
     tags=["earthquake"],
     catchup=False,
     schedule_interval=None,
@@ -37,11 +33,8 @@ with DAG(
         image='asia-southeast1-docker.pkg.dev/earthquake-etl/etl-docker-repo/earthquake_data_web_scraper:v2.1',
         docker_url='unix://var/run/docker.sock',
         network_mode='bridge',
-        mounts=[
-            Mount(source="/var/run", target="/var/run", type="bind"),
-            Mount(source=creds_host_folder_path, target="/gsa", type="bind", read_only=True)
-        ],
-        environment={"GOOGLE_APPLICATION_CREDENTIALS": creds_container_path, "bucket": bucket, "folder": folder, "project": project, "dataset": dataset},
+        mount_tmp_dir=False,
+        environment={"bucket": bucket, "folder": folder, "project": project, "dataset": dataset},
         command='python3 scraper.py',
         auto_remove=True,
     )
@@ -51,11 +44,8 @@ with DAG(
         image='asia-southeast1-docker.pkg.dev/earthquake-etl/etl-docker-repo/earthquake_data_processor:v2.0',
         docker_url='unix://var/run/docker.sock',
         network_mode='bridge',
-        mounts=[
-            Mount(source="/var/run", target="/var/run", type="bind"),
-            Mount(source=creds_host_folder_path, target="/gsa", type="bind", read_only=True)
-        ],
-        environment={"GOOGLE_APPLICATION_CREDENTIALS": creds_container_path, "bucket": bucket, "folder": folder, "project": project, "dataset": dataset},
+        mount_tmp_dir=False,
+        environment={"bucket": bucket, "folder": folder, "project": project, "dataset": dataset},
         command='python3 processor.py',
         auto_remove=True,
     )
@@ -65,11 +55,8 @@ with DAG(
         image='asia-southeast1-docker.pkg.dev/earthquake-etl/etl-docker-repo/earthquake_data_merger:v2.0',
         docker_url='unix://var/run/docker.sock',
         network_mode='bridge',
-        mounts=[
-            Mount(source="/var/run", target="/var/run", type="bind"),
-            Mount(source=creds_host_folder_path, target="/gsa", type="bind", read_only=True)
-        ],
-        environment={"GOOGLE_APPLICATION_CREDENTIALS": creds_container_path, "bucket": bucket, "folder": folder, "project": project, "dataset": dataset},
+        mount_tmp_dir=False,
+        environment={"bucket": bucket, "folder": folder, "project": project, "dataset": dataset},
         command='python3 merger.py',
         auto_remove=True,
     )
