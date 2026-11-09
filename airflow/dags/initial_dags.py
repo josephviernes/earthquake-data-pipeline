@@ -2,12 +2,10 @@ import os
 from airflow import DAG
 from airflow.providers.docker.operators.docker import DockerOperator
 from datetime import datetime, timedelta
-from docker.types import Mount
 
 
 #set-up your google credentials
 creds_container_path = "/gsa/my_creds.json"
-creds_host_folder_path = "/home/jnv/Documents/project/earthquake-data-pipeline/keys"
 
 #set-up your google bucket and if neeeded, the folder inside the bucket
 bucket = "earthquake-etl-bucket"
@@ -40,12 +38,8 @@ with DAG(
         image='asia-southeast1-docker.pkg.dev/earthquake-etl/etl-docker-repo/earthquake_bulk_data_web_scraper:v2.1',
         docker_url='unix://var/run/docker.sock',
         network_mode='bridge',
-        mounts=[
-            Mount(source="/var/run", target="/var/run", type="bind"),
-            Mount(source=creds_host_folder_path, target="/gsa", type="bind", read_only=True)
-        ],
+        mount_tmp_dir=False,
         environment={
-            "GOOGLE_APPLICATION_CREDENTIALS": creds_container_path,
             "bucket": bucket,
             "folder": folder,
             "project": project,
@@ -62,11 +56,8 @@ with DAG(
         image='asia-southeast1-docker.pkg.dev/earthquake-etl/etl-docker-repo/earthquake_data_processor:v2.0',
         docker_url='unix://var/run/docker.sock',
         network_mode='bridge',
-        mounts=[
-            Mount(source="/var/run", target="/var/run", type="bind"),
-            Mount(source=creds_host_folder_path, target="/gsa", type="bind", read_only=True)
-        ],
-        environment={"GOOGLE_APPLICATION_CREDENTIALS": creds_container_path, "bucket": bucket, "folder": folder, "project": project, "dataset": dataset, "years": years, "months": months},
+        mount_tmp_dir=False,
+        environment={"bucket": bucket, "folder": folder, "project": project, "dataset": dataset, "years": years, "months": months},
         command='python3 processor.py',
         auto_remove=True,
     )
@@ -76,11 +67,8 @@ with DAG(
         image='asia-southeast1-docker.pkg.dev/earthquake-etl/etl-docker-repo/earthquake_data_merger:v2.0',
         docker_url='unix://var/run/docker.sock',
         network_mode='bridge',
-        mounts=[
-            Mount(source="/var/run", target="/var/run", type="bind"),
-            Mount(source=creds_host_folder_path, target="/gsa", type="bind", read_only=True)
-        ],
-        environment={"GOOGLE_APPLICATION_CREDENTIALS": creds_container_path, "bucket": bucket, "folder": folder, "project": project, "dataset": dataset, "years": years, "months": months},
+        mount_tmp_dir=False,
+        environment={"bucket": bucket, "folder": folder, "project": project, "dataset": dataset, "years": years, "months": months},
         command='python3 merger.py',
         auto_remove=True,
     )

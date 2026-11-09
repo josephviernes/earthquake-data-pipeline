@@ -1,0 +1,76 @@
+import os
+from airflow import DAG
+from airflow.providers.docker.operators.docker import DockerOperator
+from datetime import datetime, timedelta
+
+
+#set-up your google credentials
+creds_container_path = "/gsa/my_creds.json"
+
+#set-up your google bucket and if neeeded, the folder inside the bucket
+bucket = "earthquake-etl-bucket"
+folder = "dailies"
+project = "earthquake-etl"
+dataset = "earthquake_etl_dataset"
+
+# set the date range of your initial data. Months with no data will be catched by the exception and will be skipped.
+years = ["2026"]
+months = ["August", "September", "October"] 
+
+
+default_args = {
+    'owner': 'jnv',
+    'retries': 1,
+    'retry_delay': timedelta(minutes=1),
+}
+
+with DAG(
+    default_args=default_args,
+    dag_id="initial_dags_v2",
+    tags=["earthquake"],
+    catchup=False,
+    schedule=None,
+    start_date=datetime(2025, 6, 10),
+) as dag:
+
+    t1 = DockerOperator(
+        task_id="bulk_scraper",
+        image='asia-southeast1-docker.pkg.dev/earthquake-etl/etl-docker-repo/earthquake_bulk_data_web_scraper:v2.1',
+        docker_url='unix://var/run/docker.sock',
+        network_mode='bridge',
+        mount_tmp_dir=False,
+        environment={
+            "bucket": bucket,
+            "folder": folder,
+            "project": project,
+            "dataset": dataset,
+            "years": ",".join(years),     # Pass them as clean comma-separated strings
+            "months": ",".join(months),   # Pass them as clean comma-separated strings
+        },
+        command='python3 bulk_scraper.py',
+        auto_remove=True,
+    )
+
+    t2 = DockerOperator(
+        task_id="processor",
+        image='asia-southeast1-docker.pkg.dev/earthquake-etl/etl-docker-repo/earthquake_data_processor:v2.0',
+        docker_url='unix://var/run/docker.sock',
+        network_mode='bridge',
+        mount_tmp_dir=False,
+        environment={"bucket": bucket, "folder": folder, "project": project, "dataset": dataset, "years": years, "months": months},
+        command='python3 processor.py',
+        auto_remove=True,
+    )
+
+    t3 = DockerOperator(
+        task_id="merger",
+        image='asia-southeast1-docker.pkg.dev/earthquake-etl/etl-docker-repo/earthquake_data_merger:v2.0',
+        docker_url='unix://var/run/docker.sock',
+        network_mode='bridge',
+        mount_tmp_dir=False,
+        environment={"bucket": bucket, "folder": folder, "project": project, "dataset": dataset, "years": years, "months": months},
+        command='python3 merger.py',
+        auto_remove=True,
+    )
+
+    t1 >> t2 >> t3
